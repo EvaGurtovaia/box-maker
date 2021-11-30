@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Box from "./Box";
+import BoxForm from "./BoxForm";
 
 class BoxList extends Component {
     constructor(props) {
@@ -10,7 +11,14 @@ class BoxList extends Component {
                 { width: 20, height: 10, color: "pink" },
             ],
         };
+        this.addBox = this.addBox.bind(this);
     }
+
+    addBox(box) {
+        this.setState(prvState => ({
+          boxes: [...prvState.boxes, box]
+        }));
+      }
 
     render() {
         let boxes = this.state.boxes.map((box) => (
@@ -18,23 +26,7 @@ class BoxList extends Component {
         ));
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="width">Width: </label>
-                    <input
-                        id="width"
-                        name="width"
-                        value={this.state.width}
-                        onChange={this.handleChange}
-                    />
-                    <label htmlFor="height">Height: </label>
-                    <input
-                        id="height"
-                        name="height"
-                        value={this.state.height}
-                        onChange={this.handleChange}
-                    />
-                    <button>Create a box !</button>
-                </form>
+                 <BoxForm />
                 <div className="BoxList">{boxes}</div>
             </div>
         );
