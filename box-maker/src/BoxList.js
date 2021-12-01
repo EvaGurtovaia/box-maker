@@ -6,27 +6,38 @@ class BoxList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            boxes: [
-                { width: 10, height: 10, color: "lightblue" },
-                { width: 20, height: 10, color: "pink" },
-            ],
+            boxes: [],
         };
         this.addBox = this.addBox.bind(this);
+        this.remove = this.remove.bind(this);
     }
 
-    addBox(box) {
-        this.setState(prvState => ({
-          boxes: [...prvState.boxes, box]
-        }));
-      }
+    addBox(newBox) {
+        this.setState({
+            boxes: [...this.state.boxes, newBox],
+        });
+    }
+
+    remove(id) {
+        this.setState({
+            boxes: this.state.boxes.filter((box) => box.id !== id),
+        });
+    }
 
     render() {
         let boxes = this.state.boxes.map((box) => (
-            <Box width={box.width} height={box.height} color={box.color} />
+            <Box
+                key={box.id}
+                id={box.id}
+                width={box.width}
+                height={box.height}
+                color={box.color}
+                removeBox={this.remove}
+            />
         ));
         return (
             <div>
-                 <BoxForm />
+                <BoxForm addBox={this.addBox} />
                 <div className="BoxList">{boxes}</div>
             </div>
         );
